@@ -1,36 +1,26 @@
 {
-    "name": "yiisoft/_____",
+    "name": "yiisoft/requirements",
     "type": "library",
-    "description": "_____",
-    "keywords": ["_____"],
+    "description": "Requirements checker",
+    "keywords": ["requirements"],
     "homepage": "http://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/_____/issues?state=open",
+        "issues": "https://github.com/yiisoft/requirements/issues?state=open",
         "forum": "http://www.yiiframework.com/forum/",
         "wiki": "http://www.yiiframework.com/wiki/",
         "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/_____"
+        "source": "https://github.com/yiisoft/requirements"
     },
     "require": {
-        "php": "^7.2"
+        "php": "^4.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.2"
     },
-    "autoload": {
-        "psr-4": {
-            "Yiisoft\\_____\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Yiisoft\\_____\\Tests\\": "tests"
-        }
-    },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-master": "1.0.x-dev"
         }
     }
 }
