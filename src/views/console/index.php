@@ -1,4 +1,5 @@
 <?php
+
 /* @var $this RequirementsChecker */
 /* @var $summary array */
 /* @var $requirements array[] */
