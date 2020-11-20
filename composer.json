@@ -22,6 +22,16 @@
         "roave/infection-static-analysis-plugin": "^1.4",
         "vimeo/psalm": "^4.2"
     },
+    "autoload": {
+        "psr-4": {
+            "Yiisoft\\Requirements\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yiisoft\\Requirements\\Tests\\": "tests"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"

@@ -1,9 +1,8 @@
 <?php
 
-if (version_compare(PHP_VERSION, '4.3', '<')) {
-    echo 'At least PHP 4.3 is required to run this script!';
-    exit(1);
-}
+declare(strict_types=1);
+
+namespace Yiisoft\Requirements;
 
 /**
  * YiiRequirementChecker allows checking, if current system meets the requirements for running the Yii application.
@@ -59,6 +58,10 @@ class RequirementsChecker
      */
     public function check($requirements)
     {
+        if (version_compare(PHP_VERSION, '4.3', '<')) {
+            echo 'At least PHP 4.3 is required to run this script!';
+            exit(1);
+        }
         if (is_string($requirements)) {
             $requirements = require $requirements;
         }
