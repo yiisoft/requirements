@@ -15,10 +15,22 @@
         "source": "https://github.com/yiisoft/requirements"
     },
     "require": {
-        "php": ">=4.3"
+        "php": "^7.4|^8.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.4"
+        "phpunit/phpunit": "^9.4",
+        "roave/infection-static-analysis-plugin": "^1.5",
+        "vimeo/psalm": "^4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yiisoft\\Requirements\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yiisoft\\Requirements\\Tests\\": "tests"
+        }
     },
     "extra": {
         "branch-alias": {

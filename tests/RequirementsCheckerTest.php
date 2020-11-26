@@ -1,8 +1,9 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace Yiisoft\Requirements\Test;
 
-require_once __DIR__ . '/../src/RequirementsChecker.php';
+use PHPUnit\Framework\TestCase;
+use Yiisoft\Requirements\RequirementsChecker;
 
 class RequirementsCheckerTest extends TestCase
 {
