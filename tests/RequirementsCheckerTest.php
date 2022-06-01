@@ -35,7 +35,9 @@ class RequirementsCheckerTest extends TestCase
             ],
         ];
 
-        $checkResult = $requirementsChecker->check($requirements)->getResult();
+        $checkResult = $requirementsChecker
+            ->check($requirements)
+            ->getResult();
         $summary = $checkResult['summary'];
 
         $this->assertCount($summary['total'], $requirements, 'Wrong summary total!');
@@ -78,7 +80,9 @@ class RequirementsCheckerTest extends TestCase
             ],
         ];
 
-        $checkResult = $requirementsChecker->check($requirements)->getResult();
+        $checkResult = $requirementsChecker
+            ->check($requirements)
+            ->getResult();
         $checkedRequirements = $checkResult['requirements'];
         $requirementsKeys = array_flip(array_keys($requirements));
 
@@ -113,7 +117,10 @@ class RequirementsCheckerTest extends TestCase
                 'memo' => 'Requirement 2',
             ],
         ];
-        $checkResult = $requirementsChecker->check($requirements1)->check($requirements2)->getResult();
+        $checkResult = $requirementsChecker
+            ->check($requirements1)
+            ->check($requirements2)
+            ->getResult();
 
         $mergedRequirements = array_merge($requirements1, $requirements2);
 

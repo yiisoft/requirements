@@ -51,7 +51,10 @@ $config = array(
 
 $requirementsChecker = new RequirementsChecker();
 
-$result = $requirementsChecker->checkYii()->check($config)->getResult();
+$result = $requirementsChecker
+    ->checkYii()
+    ->check($config)
+    ->getResult();
 $requirementsChecker->render();
 exit($result['summary']['errors'] === 0 ? 0 : 1);
 ```
