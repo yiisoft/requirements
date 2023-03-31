@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /* @var $this RequirementsChecker */
 /* @var $summary array */
 /* @var $requirements array[] */
