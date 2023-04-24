@@ -122,7 +122,7 @@ class RequirementsCheckerTest extends TestCase
             ->check($requirements2)
             ->getResult();
 
-        $mergedRequirements = array_merge($requirements1, $requirements2);
+        $mergedRequirements = [...$requirements1, ...$requirements2];
 
         $this->assertCount($checkResult['summary']['total'], $mergedRequirements, 'Wrong total checks count!');
         foreach ($mergedRequirements as $key => $mergedRequirement) {

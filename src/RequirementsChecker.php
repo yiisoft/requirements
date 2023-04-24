@@ -59,7 +59,7 @@ class RequirementsChecker
      * If a string, it is treated as the path of the file, which contains the requirements;
      * @return $this self instance.
      */
-    public function check($requirements)
+    public function check(array|string $requirements)
     {
         if (version_compare(PHP_VERSION, '4.3', '<')) {
             echo 'At least PHP 4.3 is required to run this script!';
@@ -72,14 +72,7 @@ class RequirementsChecker
             $this->usageError('Requirements must be an array, "' . gettype($requirements) . '" has been given!');
         }
         if (!isset($this->result) || !is_array($this->result)) {
-            $this->result = array(
-                'summary' => array(
-                    'total' => 0,
-                    'errors' => 0,
-                    'warnings' => 0,
-                ),
-                'requirements' => array(),
-            );
+            $this->result = ['summary' => ['total' => 0, 'errors' => 0, 'warnings' => 0], 'requirements' => []];
         }
         foreach ($requirements as $key => $rawRequirement) {
             $requirement = $this->normalizeRequirement($rawRequirement, $key);
@@ -110,7 +103,7 @@ class RequirementsChecker
      */
     public function checkYii()
     {
-        return $this->check(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'requirements.php');
+        return $this->check(__DIR__ . DIRECTORY_SEPARATOR . 'requirements.php');
     }
 
     /**
@@ -153,7 +146,7 @@ class RequirementsChecker
         if (!isset($this->result)) {
             $this->usageError('Nothing to render!');
         }
-        $baseViewFilePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'views';
+        $baseViewFilePath = __DIR__ . DIRECTORY_SEPARATOR . 'views';
         if (!empty($_SERVER['argv'])) {
             $viewFileName = $baseViewFilePath . DIRECTORY_SEPARATOR . 'console' . DIRECTORY_SEPARATOR . 'index.php';
         } else {
@@ -249,19 +242,12 @@ class RequirementsChecker
         if (!is_numeric($size)) {
             return 0;
         }
-        switch (strtolower($sizeUnit)) {
-            case 'kb':
-            case 'k':
-                return $size * 1024;
-            case 'mb':
-            case 'm':
-                return $size * 1024 * 1024;
-            case 'gb':
-            case 'g':
-                return $size * 1024 * 1024 * 1024;
-            default:
-                return 0;
-        }
+        return match (strtolower($sizeUnit)) {
+            'kb', 'k' => $size * 1024,
+            'mb', 'm' => $size * 1024 * 1024,
+            'gb', 'g' => $size * 1024 * 1024 * 1024,
+            default => 0,
+        };
     }
 
     /**
@@ -331,7 +317,7 @@ class RequirementsChecker
             $this->usageError("Requirement '{$requirementKey}' has no condition!");
         } else {
             $evalPrefix = 'eval:';
-            if (is_string($requirement['condition']) && strpos($requirement['condition'], $evalPrefix) === 0) {
+            if (is_string($requirement['condition']) && str_starts_with($requirement['condition'], $evalPrefix)) {
                 $expression = substr($requirement['condition'], strlen($evalPrefix));
                 $requirement['condition'] = $this->evaluateExpression($expression);
             }
@@ -383,7 +369,7 @@ class RequirementsChecker
      */
     public function getServerInfo()
     {
-        return isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
+        return $_SERVER['SERVER_SOFTWARE'] ?? '';
     }
 
     /**
