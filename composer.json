@@ -3,7 +3,8 @@
     "type": "library",
     "description": "Requirements checker",
     "keywords": [
-        "requirements"
+        "requirements",
+        "dev"
     ],
     "homepage": "https://www.yiiframework.com/",
     "license": "BSD-3-Clause",
