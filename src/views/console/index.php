@@ -1,8 +1,10 @@
 <?php
 
-/* @var $this RequirementsChecker */
-/* @var $summary array */
-/* @var $requirements array[] */
+declare(strict_types=1);
+
+/** @var RequirementsChecker $this */
+/** @var array $summary */
+/** @var array[] $requirements */
 
 echo "\nRequirements Checker\n\n";
 
