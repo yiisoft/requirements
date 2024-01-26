@@ -110,7 +110,7 @@ class RequirementsChecker
      */
     public function checkYii()
     {
-        return $this->check(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'requirements.php');
+        return $this->check(__DIR__ . DIRECTORY_SEPARATOR . 'requirements.php');
     }
 
     /**
@@ -139,9 +139,8 @@ class RequirementsChecker
     {
         if (isset($this->result)) {
             return $this->result;
-        } else {
-            return null;
         }
+            return null;
     }
 
     /**
@@ -153,7 +152,7 @@ class RequirementsChecker
         if (!isset($this->result)) {
             $this->usageError('Nothing to render!');
         }
-        $baseViewFilePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'views';
+        $baseViewFilePath = __DIR__ . DIRECTORY_SEPARATOR . 'views';
         if (!empty($_SERVER['argv'])) {
             $viewFileName = $baseViewFilePath . DIRECTORY_SEPARATOR . 'console' . DIRECTORY_SEPARATOR . 'index.php';
         } else {
@@ -311,9 +310,8 @@ class RequirementsChecker
             require $_viewFile_;
 
             return ob_get_clean();
-        } else {
-            require $_viewFile_;
         }
+            require $_viewFile_;
     }
 
     /**
@@ -383,7 +381,7 @@ class RequirementsChecker
      */
     public function getServerInfo()
     {
-        return isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
+        return $_SERVER['SERVER_SOFTWARE'] ?? '';
     }
 
     /**
