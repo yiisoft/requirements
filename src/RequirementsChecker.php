@@ -393,5 +393,7 @@ class RequirementsChecker
         return @strftime('%Y-%m-%d %H:%M', time());
     }
 
-    public function ecs() {}
+    public function ecs()
+    {
+    }
 }
