@@ -140,7 +140,7 @@ class RequirementsChecker
         if (isset($this->result)) {
             return $this->result;
         }
-            return null;
+        return null;
     }
 
     /**
@@ -311,7 +311,7 @@ class RequirementsChecker
 
             return ob_get_clean();
         }
-            require $_viewFile_;
+        require $_viewFile_;
     }
 
     /**
@@ -393,7 +393,5 @@ class RequirementsChecker
         return @strftime('%Y-%m-%d %H:%M', time());
     }
 
-    public function ecs()
-    {
-    }
+    public function ecs() {}
 }
