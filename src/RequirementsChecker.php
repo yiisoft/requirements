@@ -13,58 +13,50 @@ namespace Yiisoft\Requirements;
  * ```php
  * require_once 'path/to/YiiRequirementChecker.php';
  * $requirementsChecker = new YiiRequirementChecker();
- * $requirements = array(
- *     array(
+ * $requirements = [
+ *     [
  *         'name' => 'PHP Some Extension',
  *         'mandatory' => true`,
  *         'condition' => extension_loaded('some_extension'),
  *         'by' => 'Some application feature',
  *         'memo' => 'PHP extension "some_extension" required',
- *     ),
- * );
+ *     ],
+ * ];
  * $requirementsChecker
- *     ->chekYii()
  *     ->check($requirements)
  *     ->render();
  * ```
  *
- * If you wish to render the report with your own representation, use [[getResult()]] instead of [[render()]]
+ * If you wish to render the report with your own representation, use {@see getResult()} instead of {@see render()}.
  *
  * Requirement condition could be in format "eval:PHP expression".
  * In this case specified PHP expression will be evaluated in the context of this class instance.
  * For example:
  *
  * ```php
- * $requirements = array(
- *     array(
+ * $requirements = [
+ *     [
  *         'name' => 'Upload max file size',
  *         'condition' => 'eval:$this->checkUploadMaxFileSize("5M")',
- *     ),
- * );
+ *     ],
+ * ];
  * ```
  *
- * Note: this class definition does not match ordinary Yii style, because it should match PHP 4.3
- * and should not use features from newer PHP versions!
- *
- * @property array|null $result the check results, this property is for internal usage only.
+ * @property array|null $result The check results, this property is for internal usage only.
  */
-class RequirementsChecker
+final class RequirementsChecker
 {
     /**
      * Check the given requirements, collecting results into internal field.
      * This method can be invoked several times checking different requirement sets.
-     * Use [[getResult()]] or [[render()]] to get the results.
-     * @param array|string $requirements requirements to be checked.
+     * Use {@see getResult()} or {@see render()} to get the results.
+     * @param array|string $requirements Requirements to be checked.
      * If an array, it is treated as the set of requirements;
      * If a string, it is treated as the path of the file, which contains the requirements;
-     * @return $this self instance.
+     * @return $this Self instance.
      */
-    public function check($requirements)
+    public function check($requirements): self
     {
-        if (version_compare(PHP_VERSION, '4.3', '<')) {
-            echo 'At least PHP 4.3 is required to run this script!';
-            exit(1);
-        }
         if (is_string($requirements)) {
             $requirements = require $requirements;
         }
@@ -72,14 +64,14 @@ class RequirementsChecker
             $this->usageError('Requirements must be an array, "' . gettype($requirements) . '" has been given!');
         }
         if (!isset($this->result) || !is_array($this->result)) {
-            $this->result = array(
-                'summary' => array(
+            $this->result = [
+                'summary' => [
                     'total' => 0,
                     'errors' => 0,
                     'warnings' => 0,
-                ),
-                'requirements' => array(),
-            );
+                ],
+                'requirements' => [],
+            ];
         }
         foreach ($requirements as $key => $rawRequirement) {
             $requirement = $this->normalizeRequirement($rawRequirement, $key);
@@ -105,55 +97,42 @@ class RequirementsChecker
     }
 
     /**
-     * Performs the check for the Yii core requirements.
-     * @return RequirementsChecker self instance.
-     */
-    public function checkYii()
-    {
-        return $this->check(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'requirements.php');
-    }
-
-    /**
      * Return the check results.
      * @return array|null check results in format:
      *
      * ```php
-     * array(
-     *     'summary' => array(
+     * [
+     *     'summary' => [
      *         'total' => total number of checks,
      *         'errors' => number of errors,
      *         'warnings' => number of warnings,
-     *     ),
-     *     'requirements' => array(
-     *         array(
+     *     ],
+     *     'requirements' => [
+     *         [
      *             ...
      *             'error' => is there an error,
      *             'warning' => is there a warning,
-     *         ),
+     *         ],
      *         ...
-     *     ),
-     * )
+     *     ],
+     * ]
      * ```
      */
-    public function getResult()
+    public function getResult(): ?array
     {
-        if (isset($this->result)) {
-            return $this->result;
-        } else {
-            return null;
-        }
+        return $this->result ?? null;
     }
 
     /**
      * Renders the requirements check result.
-     * The output will vary depending is a script running from web or from console.
+     * The output will vary depending on if a script running from web or from console.
      */
-    public function render()
+    public function render(): void
     {
         if (!isset($this->result)) {
             $this->usageError('Nothing to render!');
         }
-        $baseViewFilePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'views';
+        $baseViewFilePath = __DIR__ . DIRECTORY_SEPARATOR . 'views';
         if (!empty($_SERVER['argv'])) {
             $viewFileName = $baseViewFilePath . DIRECTORY_SEPARATOR . 'console' . DIRECTORY_SEPARATOR . 'index.php';
         } else {
@@ -165,11 +144,11 @@ class RequirementsChecker
     /**
      * Checks if the given PHP extension is available and its version matches the given one.
      * @param string $extensionName PHP extension name.
-     * @param string $version required PHP extension version.
-     * @param string $compare comparison operator, by default '>='
-     * @return bool if PHP extension version matches.
+     * @param string $version Required PHP extension version.
+     * @param string $compare Comparison operator, by default '>='
+     * @return bool If PHP extension version matches.
      */
-    public function checkPhpExtensionVersion($extensionName, $version, $compare = '>=')
+    public function checkPhpExtensionVersion(string $extensionName, string $version, string $compare = '>='): bool
     {
         if (!extension_loaded($extensionName)) {
             return false;
@@ -186,11 +165,11 @@ class RequirementsChecker
     }
 
     /**
-     * Checks if PHP configuration option (from php.ini) is on.
-     * @param string $name configuration option name.
-     * @return bool option is on.
+     * Checks if PHP configuration option (from `php.ini`) is on.
+     * @param string $name Configuration option name.
+     * @return bool Whether option is on.
      */
-    public function checkPhpIniOn($name)
+    public function checkPhpIniOn(string $name): bool
     {
         $value = ini_get($name);
         if (empty($value)) {
@@ -201,11 +180,11 @@ class RequirementsChecker
     }
 
     /**
-     * Checks if PHP configuration option (from php.ini) is off.
-     * @param string $name configuration option name.
-     * @return bool option is off.
+     * Checks if PHP configuration option (from `php.ini`) is off.
+     * @param string $name Configuration option name.
+     * @return bool Whether option is off.
      */
-    public function checkPhpIniOff($name)
+    public function checkPhpIniOff(string $name): bool
     {
         $value = ini_get($name);
         if (empty($value)) {
@@ -218,12 +197,12 @@ class RequirementsChecker
     /**
      * Compare byte sizes of values given in the verbose representation,
      * like '5M', '15K' etc.
-     * @param string $a first value.
-     * @param string $b second value.
-     * @param string $compare comparison operator, by default '>='.
-     * @return bool comparison result.
+     * @param string $a First value.
+     * @param string $b Second value.
+     * @param string $compare Comparison operator, by default '>='.
+     * @return bool Comparison result.
      */
-    public function compareByteSize($a, $b, $compare = '>=')
+    public function compareByteSize(string $a, string $b, string $compare = '>='): bool
     {
         $compareExpression = '(' . $this->getByteSize($a) . $compare . $this->getByteSize($b) . ')';
 
@@ -233,10 +212,10 @@ class RequirementsChecker
     /**
      * Gets the size in bytes from verbose size representation.
      * For example: '5K' => 5*1024
-     * @param string $verboseSize verbose size representation.
-     * @return int actual size in bytes.
+     * @param string $verboseSize Verbose size representation.
+     * @return int Actual size in bytes.
      */
-    public function getByteSize($verboseSize)
+    public function getByteSize(string $verboseSize): int
     {
         if (empty($verboseSize)) {
             return 0;
@@ -266,11 +245,11 @@ class RequirementsChecker
 
     /**
      * Checks if upload max file size matches the given range.
-     * @param string|null $min verbose file size minimum required value, pass null to skip minimum check.
-     * @param string|null $max verbose file size maximum required value, pass null to skip maximum check.
-     * @return bool success.
+     * @param string|null $min Verbose file size minimum required value, pass null to skip minimum check.
+     * @param string|null $max Verbose file size maximum required value, pass null to skip maximum check.
+     * @return bool True on success.
      */
-    public function checkUploadMaxFileSize($min = null, $max = null)
+    public function checkUploadMaxFileSize(?string $min = null, ?string $max = null): bool
     {
         $postMaxSize = ini_get('post_max_size');
         $uploadMaxFileSize = ini_get('upload_max_filesize');
@@ -292,12 +271,12 @@ class RequirementsChecker
      * Renders a view file.
      * This method includes the view file as a PHP script
      * and captures the display result if required.
-     * @param string $_viewFile_ view file
-     * @param array $_data_ data to be extracted and made available to the view file
-     * @param bool $_return_ whether the rendering result should be returned as a string
-     * @return string the rendering result. Null if the rendering result is not required.
+     * @param string $_viewFile_ View file.
+     * @param array|null $_data_ Data to be extracted and made available to the view file.
+     * @param bool $_return_ Whether the rendering result should be returned as a string.
+     * @return string The rendering result. Null if the rendering result is not required.
      */
-    public function renderViewFile($_viewFile_, $_data_ = null, $_return_ = false)
+    public function renderViewFile(string $_viewFile_, array $_data_ = null, bool $_return_ = false): ?string
     {
         // we use special variable names here to avoid conflict when extracting data
         if (is_array($_data_)) {
@@ -311,24 +290,22 @@ class RequirementsChecker
             require $_viewFile_;
 
             return ob_get_clean();
-        } else {
-            require $_viewFile_;
         }
+
+        require $_viewFile_;
+        return null;
     }
 
     /**
      * Normalizes requirement ensuring it has correct format.
-     * @param array $requirement raw requirement.
-     * @param int $requirementKey requirement key in the list.
-     * @return array normalized requirement.
+     * @param array $requirement Raw requirement.
+     * @param int|string $requirementKey Requirement key in the list.
+     * @return array Normalized requirement.
      */
-    public function normalizeRequirement($requirement, $requirementKey = 0)
+    public function normalizeRequirement(array $requirement, $requirementKey = 0): array
     {
-        if (!is_array($requirement)) {
-            $this->usageError('Requirement must be an array!');
-        }
         if (!array_key_exists('condition', $requirement)) {
-            $this->usageError("Requirement '{$requirementKey}' has no condition!");
+            $this->usageError("Requirement \"$requirementKey\" has no condition!");
         } else {
             $evalPrefix = 'eval:';
             if (is_string($requirement['condition']) && strpos($requirement['condition'], $evalPrefix) === 0) {
@@ -361,7 +338,7 @@ class RequirementsChecker
      * This method will then terminate the execution of the current application.
      * @param string $message the error message
      */
-    public function usageError($message)
+    public function usageError(string $message): void
     {
         echo "Error: $message\n\n";
         exit(1);
@@ -369,10 +346,10 @@ class RequirementsChecker
 
     /**
      * Evaluates a PHP expression under the context of this class.
-     * @param string $expression a PHP expression to be evaluated.
-     * @return mixed the expression result.
+     * @param string $expression A PHP expression to be evaluated.
+     * @return mixed The expression result.
      */
-    public function evaluateExpression($expression)
+    public function evaluateExpression(string $expression)
     {
         return eval('return ' . $expression . ';');
     }
@@ -381,16 +358,16 @@ class RequirementsChecker
      * Returns the server information.
      * @return string server information.
      */
-    public function getServerInfo()
+    public function getServerInfo(): string
     {
-        return isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
+        return $_SERVER['SERVER_SOFTWARE'] ?? '';
     }
 
     /**
      * Returns the now date if possible in string representation.
      * @return string now date.
      */
-    public function getNowDate()
+    public function getNowDate(): string
     {
         return @strftime('%Y-%m-%d %H:%M', time());
     }

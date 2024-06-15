@@ -1,5 +1,5 @@
 <?php
-/* @var $this RequirementsChecker */
+/* @var $this Yiisoft\Requirements\RequirementsChecker */
 /* @var $summary array */
 /* @var $requirements array[] */
 ?><!DOCTYPE html>
@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>Yii Application Requirement Checker</title>
-    <?php $this->renderViewFile(dirname(__FILE__) . '/css.php'); ?>
+    <?php $this->renderViewFile(__DIR__ . '/css.php'); ?>
 </head>
 <body>
 <div class="container">
@@ -70,7 +70,7 @@
     <hr>
     <footer>
         <p>Server: <?php echo $this->getServerInfo() . ' ' . $this->getNowDate() ?></p>
-        <p>Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a></p>
+        <p>Powered by <a href="https://www.yiiframework.com/" rel="external">Yii Framework</a></p>
     </footer>
 </div>
 </body>

@@ -1,13 +1,13 @@
 <?php
 
-namespace Yiisoft\Requirements\Test;
+namespace Yiisoft\Requirements\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Requirements\RequirementsChecker;
 
 class RequirementsCheckerTest extends TestCase
 {
-    public function testCheck()
+    public function testCheck(): void
     {
         $requirementsChecker = new RequirementsChecker();
 
@@ -47,19 +47,34 @@ class RequirementsCheckerTest extends TestCase
         $checkedRequirements = $checkResult['requirements'];
         $requirementsKeys = array_flip(array_keys($requirements));
 
-        $this->assertFalse($checkedRequirements[$requirementsKeys['requirementPass']]['error'], 'Passed requirement has an error!');
-        $this->assertFalse($checkedRequirements[$requirementsKeys['requirementPass']]['warning'], 'Passed requirement has a warning!');
+        $this->assertFalse(
+            $checkedRequirements[$requirementsKeys['requirementPass']]['error'],
+            'Passed requirement has an error!'
+        );
+        $this->assertFalse(
+            $checkedRequirements[$requirementsKeys['requirementPass']]['warning'],
+            'Passed requirement has a warning!'
+        );
 
-        $this->assertTrue($checkedRequirements[$requirementsKeys['requirementError']]['error'], 'Error requirement has no error!');
+        $this->assertTrue(
+            $checkedRequirements[$requirementsKeys['requirementError']]['error'],
+            'Error requirement has no error!'
+        );
 
-        $this->assertFalse($checkedRequirements[$requirementsKeys['requirementWarning']]['error'], 'Error requirement has an error!');
-        $this->assertTrue($checkedRequirements[$requirementsKeys['requirementWarning']]['warning'], 'Error requirement has no warning!');
+        $this->assertFalse(
+            $checkedRequirements[$requirementsKeys['requirementWarning']]['error'],
+            'Error requirement has an error!'
+        );
+        $this->assertTrue(
+            $checkedRequirements[$requirementsKeys['requirementWarning']]['warning'],
+            'Error requirement has no warning!'
+        );
     }
 
     /**
      * @depends testCheck
      */
-    public function testCheckEval()
+    public function testCheckEval(): void
     {
         $requirementsChecker = new RequirementsChecker();
 
@@ -86,16 +101,25 @@ class RequirementsCheckerTest extends TestCase
         $checkedRequirements = $checkResult['requirements'];
         $requirementsKeys = array_flip(array_keys($requirements));
 
-        $this->assertFalse($checkedRequirements[$requirementsKeys['requirementPass']]['error'], 'Passed requirement has an error!');
-        $this->assertFalse($checkedRequirements[$requirementsKeys['requirementPass']]['warning'], 'Passed requirement has a warning!');
+        $this->assertFalse(
+            $checkedRequirements[$requirementsKeys['requirementPass']]['error'],
+            'Passed requirement has an error!'
+        );
+        $this->assertFalse(
+            $checkedRequirements[$requirementsKeys['requirementPass']]['warning'],
+            'Passed requirement has a warning!'
+        );
 
-        $this->assertTrue($checkedRequirements[$requirementsKeys['requirementError']]['error'], 'Error requirement has no error!');
+        $this->assertTrue(
+            $checkedRequirements[$requirementsKeys['requirementError']]['error'],
+            'Error requirement has no error!'
+        );
     }
 
     /**
      * @depends testCheck
      */
-    public function testCheckChained()
+    public function testCheckChained(): void
     {
         $requirementsChecker = new RequirementsChecker();
 
@@ -126,11 +150,15 @@ class RequirementsCheckerTest extends TestCase
 
         $this->assertCount($checkResult['summary']['total'], $mergedRequirements, 'Wrong total checks count!');
         foreach ($mergedRequirements as $key => $mergedRequirement) {
-            $this->assertEquals($mergedRequirement['name'], $checkResult['requirements'][$key]['name'], 'Wrong requirements list!');
+            $this->assertEquals(
+                $mergedRequirement['name'],
+                $checkResult['requirements'][$key]['name'],
+                'Wrong requirements list!'
+            );
         }
     }
 
-    public function testCheckPhpExtensionVersion()
+    public function testCheckPhpExtensionVersion(): void
     {
         if (defined('HHVM_VERSION')) {
             $this->markTestSkipped('Can not test this on HHVM.');
@@ -138,7 +166,10 @@ class RequirementsCheckerTest extends TestCase
 
         $requirementsChecker = new RequirementsChecker();
 
-        $this->assertFalse($requirementsChecker->checkPhpExtensionVersion('some_unexisting_php_extension', '0.1'), 'No fail while checking unexisting extension!');
+        $this->assertFalse(
+            $requirementsChecker->checkPhpExtensionVersion('some_non_existing_php_extension', '0.1'),
+            'No fail while checking non existing extension!'
+        );
         $this->assertTrue($requirementsChecker->checkPhpExtensionVersion('pdo', '1.0'), 'Unable to check PDO version!');
     }
 
@@ -146,7 +177,7 @@ class RequirementsCheckerTest extends TestCase
      * Data provider for [[testGetByteSize()]].
      * @return array
      */
-    public function dataProviderGetByteSize()
+    public function dataProviderGetByteSize(): array
     {
         return [
             ['456', 456],
@@ -162,21 +193,25 @@ class RequirementsCheckerTest extends TestCase
     /**
      * @dataProvider dataProviderGetByteSize
      *
-     * @param string  $verboseValue     verbose value.
-     * @param int $expectedByteSize expected byte size.
+     * @param string $verboseValue Verbose value.
+     * @param int $expectedByteSize Expected byte size.
      */
-    public function testGetByteSize($verboseValue, $expectedByteSize)
+    public function testGetByteSize(string $verboseValue, int $expectedByteSize): void
     {
         $requirementsChecker = new RequirementsChecker();
 
-        $this->assertEquals($expectedByteSize, $requirementsChecker->getByteSize($verboseValue), "Wrong byte size for '{$verboseValue}'!");
+        $this->assertEquals(
+            $expectedByteSize,
+            $requirementsChecker->getByteSize($verboseValue),
+            "Wrong byte size for \"$verboseValue\"!"
+        );
     }
 
     /**
-     * Data provider for [[testCompareByteSize()]]
+     * Data provider for {@see testCompareByteSize()}
      * @return array
      */
-    public function dataProviderCompareByteSize()
+    public function dataProviderCompareByteSize(): array
     {
         return [
             ['2M', '2K', '>', true],
@@ -191,14 +226,18 @@ class RequirementsCheckerTest extends TestCase
      * @depends testGetByteSize
      * @dataProvider dataProviderCompareByteSize
      *
-     * @param string  $a                        first value.
-     * @param string  $b                        second value.
-     * @param string  $compare                  comparison.
-     * @param bool $expectedComparisonResult expected comparison result.
+     * @param string $a First value.
+     * @param string $b Second value.
+     * @param string $compare Comparison.
+     * @param bool $expectedComparisonResult Expected comparison result.
      */
-    public function testCompareByteSize($a, $b, $compare, $expectedComparisonResult)
+    public function testCompareByteSize(string $a, string $b, string $compare, bool $expectedComparisonResult): void
     {
         $requirementsChecker = new RequirementsChecker();
-        $this->assertEquals($expectedComparisonResult, $requirementsChecker->compareByteSize($a, $b, $compare), "Wrong compare '{$a}{$compare}{$b}'");
+        $this->assertEquals(
+            $expectedComparisonResult,
+            $requirementsChecker->compareByteSize($a, $b, $compare),
+            "Wrong compare \"{$a}{$compare}{$b}\""
+        );
     }
 }
