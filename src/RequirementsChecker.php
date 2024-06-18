@@ -152,6 +152,8 @@ final class RequirementsChecker
      * @param string $version Required PHP extension version.
      * @param string $compare Comparison operator, by default '>='
      * @return bool If PHP extension version matches.
+     *
+     * @psalm-param '!='|'<'|'<='|'<>'|'='|'=='|'>'|'>='|'eq'|'ge'|'gt'|'le'|'lt'|'ne' $compare
      */
     public function checkPhpExtensionVersion(string $extensionName, string $version, string $compare = '>='): bool
     {
