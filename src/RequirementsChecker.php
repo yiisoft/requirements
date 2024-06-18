@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Requirements;
 
+use function intval;
+
 /**
  * YiiRequirementChecker allows checking, if current system meets the requirements for running the Yii application.
  * This class allows rendering of the check report for the web and console application interface.
@@ -234,13 +236,13 @@ final class RequirementsChecker
         switch (strtolower($sizeUnit)) {
             case 'kb':
             case 'k':
-                return $size * 1024;
+                return intval($size * 1024);
             case 'mb':
             case 'm':
-                return $size * 1024 * 1024;
+                return intval($size * 1024 * 1024);
             case 'gb':
             case 'g':
-                return $size * 1024 * 1024 * 1024;
+                return intval($size * 1024 * 1024 * 1024);
             default:
                 return 0;
         }
@@ -289,6 +291,9 @@ final class RequirementsChecker
         }
         if ($_return_) {
             ob_start();
+            /**
+             * @psalm-suppress InvalidArgument Need for compatibility with PHP 7.4
+             */
             PHP_VERSION_ID >= 80000 ? ob_implicit_flush(false) : ob_implicit_flush(0);
             require $_viewFile_;
 
