@@ -68,7 +68,7 @@ final class RequirementsChecker
         if (!is_array($requirements)) {
             $this->usageError('Requirements must be an array, "' . gettype($requirements) . '" has been given!');
         }
-        if (!isset($this->result) || !is_array($this->result)) {
+        if (!isset($this->result)) {
             $this->result = [
                 'summary' => [
                     'total' => 0,
