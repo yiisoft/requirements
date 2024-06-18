@@ -63,6 +63,7 @@ final class RequirementsChecker
     public function check($requirements): self
     {
         if (is_string($requirements)) {
+            /** @psalm-suppress UnresolvableInclude */
             $requirements = require $requirements;
         }
         if (!is_array($requirements)) {
@@ -298,12 +299,16 @@ final class RequirementsChecker
              * @psalm-suppress InvalidArgument Need for compatibility with PHP 7.4
              */
             PHP_VERSION_ID >= 80000 ? ob_implicit_flush(false) : ob_implicit_flush(0);
+
+            /** @psalm-suppress UnresolvableInclude */
             require $_viewFile_;
 
             return ob_get_clean();
         }
 
+        /** @psalm-suppress UnresolvableInclude */
         require $_viewFile_;
+
         return null;
     }
 
