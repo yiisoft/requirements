@@ -48,6 +48,15 @@ final class RequirementsChecker
 {
     /**
      * @var array|null The check results, this property is for internal usage only.
+     *
+     * @psalm-var array{
+     *     summary: array{
+     *       total: int,
+     *       errors: int,
+     *       warnings: int,
+     *     },
+     *     requirements: array
+     * }|null
      */
     public ?array $result = null;
 
@@ -80,6 +89,11 @@ final class RequirementsChecker
             ];
         }
         foreach ($requirements as $key => $rawRequirement) {
+            if (!is_array($rawRequirement)) {
+                $this->usageError(
+                    'Requirement must be an array, "' . gettype($rawRequirement) . '" has been given!'
+                );
+            }
             $requirement = $this->normalizeRequirement($rawRequirement, $key);
             $this->result['summary']['total']++;
             if (!$requirement['condition']) {
@@ -215,6 +229,7 @@ final class RequirementsChecker
     {
         $compareExpression = '(' . $this->getByteSize($a) . $compare . $this->getByteSize($b) . ')';
 
+        /** @var bool */
         return $this->evaluateExpression($compareExpression);
     }
 
@@ -353,6 +368,8 @@ final class RequirementsChecker
      * Displays a usage error.
      * This method will then terminate the execution of the current application.
      * @param string $message the error message
+     *
+     * @psalm-return never
      */
     public function usageError(string $message): void
     {
