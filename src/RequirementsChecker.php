@@ -166,6 +166,7 @@ final class RequirementsChecker
             $extensionVersion = substr($extensionVersion, 5);
         }
 
+        /** @var bool */
         return version_compare($extensionVersion, $version, $compare);
     }
 
