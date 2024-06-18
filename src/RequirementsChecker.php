@@ -41,11 +41,14 @@ namespace Yiisoft\Requirements;
  *     ],
  * ];
  * ```
- *
- * @property array|null $result The check results, this property is for internal usage only.
  */
 final class RequirementsChecker
 {
+    /**
+     * @var array|null The check results, this property is for internal usage only.
+     */
+    public ?array $result = null;
+
     /**
      * Check the given requirements, collecting results into internal field.
      * This method can be invoked several times checking different requirement sets.
