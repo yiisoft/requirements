@@ -1,7 +1,9 @@
 <?php
-/* @var $this Yiisoft\Requirements\RequirementsChecker */
-/* @var $summary array */
-/* @var $requirements array[] */
+/**
+ * @var Yiisoft\Requirements\RequirementsChecker $this
+ * @var array $summary
+ * @var array[] $requirements
+ */
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

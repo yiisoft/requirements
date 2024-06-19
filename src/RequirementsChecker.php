@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Requirements;
 
+use function intval;
+
 /**
  * YiiRequirementChecker allows checking, if current system meets the requirements for running the Yii application.
  * This class allows rendering of the check report for the web and console application interface.
@@ -41,11 +43,23 @@ namespace Yiisoft\Requirements;
  *     ],
  * ];
  * ```
- *
- * @property array|null $result The check results, this property is for internal usage only.
  */
 final class RequirementsChecker
 {
+    /**
+     * @var array|null The check results, this property is for internal usage only.
+     *
+     * @psalm-var array{
+     *     summary: array{
+     *       total: int,
+     *       errors: int,
+     *       warnings: int,
+     *     },
+     *     requirements: array
+     * }|null
+     */
+    public ?array $result = null;
+
     /**
      * Check the given requirements, collecting results into internal field.
      * This method can be invoked several times checking different requirement sets.
@@ -58,12 +72,13 @@ final class RequirementsChecker
     public function check($requirements): self
     {
         if (is_string($requirements)) {
+            /** @psalm-suppress UnresolvableInclude */
             $requirements = require $requirements;
         }
         if (!is_array($requirements)) {
             $this->usageError('Requirements must be an array, "' . gettype($requirements) . '" has been given!');
         }
-        if (!isset($this->result) || !is_array($this->result)) {
+        if (!isset($this->result)) {
             $this->result = [
                 'summary' => [
                     'total' => 0,
@@ -74,6 +89,11 @@ final class RequirementsChecker
             ];
         }
         foreach ($requirements as $key => $rawRequirement) {
+            if (!is_array($rawRequirement)) {
+                $this->usageError(
+                    'Requirement must be an array, "' . gettype($rawRequirement) . '" has been given!'
+                );
+            }
             $requirement = $this->normalizeRequirement($rawRequirement, $key);
             $this->result['summary']['total']++;
             if (!$requirement['condition']) {
@@ -147,6 +167,8 @@ final class RequirementsChecker
      * @param string $version Required PHP extension version.
      * @param string $compare Comparison operator, by default '>='
      * @return bool If PHP extension version matches.
+     *
+     * @psalm-param '!='|'<'|'<='|'<>'|'='|'=='|'>'|'>='|'eq'|'ge'|'gt'|'le'|'lt'|'ne' $compare
      */
     public function checkPhpExtensionVersion(string $extensionName, string $version, string $compare = '>='): bool
     {
@@ -161,6 +183,7 @@ final class RequirementsChecker
             $extensionVersion = substr($extensionVersion, 5);
         }
 
+        /** @var bool */
         return version_compare($extensionVersion, $version, $compare);
     }
 
@@ -206,6 +229,7 @@ final class RequirementsChecker
     {
         $compareExpression = '(' . $this->getByteSize($a) . $compare . $this->getByteSize($b) . ')';
 
+        /** @var bool */
         return $this->evaluateExpression($compareExpression);
     }
 
@@ -231,13 +255,13 @@ final class RequirementsChecker
         switch (strtolower($sizeUnit)) {
             case 'kb':
             case 'k':
-                return $size * 1024;
+                return intval($size * 1024);
             case 'mb':
             case 'm':
-                return $size * 1024 * 1024;
+                return intval($size * 1024 * 1024);
             case 'gb':
             case 'g':
-                return $size * 1024 * 1024 * 1024;
+                return intval($size * 1024 * 1024 * 1024);
             default:
                 return 0;
         }
@@ -286,13 +310,20 @@ final class RequirementsChecker
         }
         if ($_return_) {
             ob_start();
+            /**
+             * @psalm-suppress InvalidArgument Need for compatibility with PHP 7.4
+             */
             PHP_VERSION_ID >= 80000 ? ob_implicit_flush(false) : ob_implicit_flush(0);
+
+            /** @psalm-suppress UnresolvableInclude */
             require $_viewFile_;
 
             return ob_get_clean();
         }
 
+        /** @psalm-suppress UnresolvableInclude */
         require $_viewFile_;
+
         return null;
     }
 
@@ -337,6 +368,8 @@ final class RequirementsChecker
      * Displays a usage error.
      * This method will then terminate the execution of the current application.
      * @param string $message the error message
+     *
+     * @psalm-return never
      */
     public function usageError(string $message): void
     {

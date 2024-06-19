@@ -2,7 +2,7 @@
 
 ## 1.0.1 under development
 
-- no changes in this release.
+- Enh #71: Improve requirements array validation (@vjik)
 
 ## 1.0.0 June 15, 2024
 
