@@ -7,14 +7,16 @@ namespace Yiisoft\Requirements;
 use function intval;
 
 /**
- * YiiRequirementChecker allows checking, if current system meets the requirements for running the Yii application.
+ * RequirementChecker allows checking, if current system meets the requirements for running the Yii application.
  * This class allows rendering of the check report for the web and console application interface.
  *
  * Example:
  *
  * ```php
- * require_once 'path/to/YiiRequirementChecker.php';
- * $requirementsChecker = new YiiRequirementChecker();
+ * 
+ * require_once('vendor/yiisoft/requirements/src/RequirementsChecker.php');
+ * use Yiisoft\Requirements\RequirementsChecker;
+ * $requirementsChecker = new RequirementsChecker;
  * $requirements = [
  *     [
  *         'name' => 'PHP Some Extension',
@@ -313,7 +315,7 @@ final class RequirementsChecker
             /**
              * @psalm-suppress InvalidArgument Need for compatibility with PHP 7.4
              */
-            PHP_VERSION_ID >= 80000 ? ob_implicit_flush(false) : ob_implicit_flush(0);
+            PHP_VERSION_ID >= 80000 ? ob_implicit_flush(false) : ob_implicit_flush(false);
 
             /** @psalm-suppress UnresolvableInclude */
             require $_viewFile_;
@@ -402,6 +404,10 @@ final class RequirementsChecker
      */
     public function getNowDate(): string
     {
-        return @strftime('%Y-%m-%d %H:%M', time());
+        // DEPRECATED as of PHP 8.1.0. Relying on this function is highly discouraged.
+        // https://www.php.net/manual/en/function.strftime.php
+        // return @strftime('%Y-%m-%d %H:%M', time()); 
+
+        return date("Y-m-d H:i:s", time());
     }
 }

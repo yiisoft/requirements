@@ -1,10 +1,8 @@
 <?php
 
-/**
- * @var Yiisoft\Requirements\RequirementsChecker $this
- * @var array $summary
- * @var array[] $requirements
- */
+/* @var $this Yiisoft\Requirements\RequirementsChecker */
+/* @var $summary array */
+/* @var $requirements array[] */
 
 echo "\nRequirements Checker\n\n";
 
@@ -20,12 +18,16 @@ echo str_pad('', strlen($header), '-') . "\n\n";
 foreach ($requirements as $key => $requirement) {
     if ($requirement['condition']) {
         echo $requirement['name'] . ": OK\n";
+        $memo = strip_tags($requirement['memo']);
+        if (!empty($memo)) {
+            echo strip_tags($requirement['memo']) . "\n";
+        }
     } else {
         echo $requirement['name'] . ': ' . ($requirement['mandatory'] ? 'FAILED!!!' : 'WARNING!!!') . "\n";
         echo 'Required by: ' . strip_tags($requirement['by']) . "\n";
         $memo = strip_tags($requirement['memo']);
         if (!empty($memo)) {
-            echo 'Memo: ' . strip_tags($requirement['memo']) . "\n";
+            echo strip_tags($requirement['memo']) . "\n";
         }
     }
     echo "\n";
