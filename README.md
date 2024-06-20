@@ -22,12 +22,18 @@ The package allows to check if a certain set of defined requirements is met.
 
 ## General usage
 
-Requirements checker could be used either from web or from command line. Create `requirements.php`:
+Requirements checker could be used either from web or from command line. First, create `requirements.php` file:
 
 ```php
 <?php
-require_once('/path/to/requirements/RequirementsChecker.php');
 
+require_once('vendor/yiisoft/requirements/src/RequirementsChecker.php');
+
+use Yiisoft\Requirements\RequirementsChecker;
+
+$requirementsChecker = new RequirementsChecker;
+
+// Add here the conditions that must be verified
 $config = [
     [
         'name' => 'PHP version',
@@ -46,22 +52,25 @@ $config = [
     [
         'name' => 'Intl extension',
         'mandatory' => false,
-        'condition' => $this->checkPhpExtensionVersion('intl', '1.0.2', '>='),
+        'condition' => $requirementsChecker->checkPhpExtensionVersion('intl', '1.0.2', '>='),
         'by' => '<a href="https://secure.php.net/manual/en/book.intl.php">Internationalization</a> support',
         'memo' => 'PHP Intl extension 1.0.2 or higher is required.'
-    ],    
-);
-
-$requirementsChecker = new RequirementsChecker();
+    ],
+];
 
 $result = $requirementsChecker
     ->check($config)
     ->getResult();
 $requirementsChecker->render();
+
 exit($result['summary']['errors'] === 0 ? 0 : 1);
 ```
 
-Now it could be either put to webroot or executed as `php requirements.php`.
+And now it could be either put to webroot or executed as:
+
+```shell
+php requirements.php
+```
 
 ## Documentation
 
