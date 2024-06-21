@@ -404,10 +404,6 @@ final class RequirementsChecker
      */
     public function getNowDate(): string
     {
-        // DEPRECATED as of PHP 8.1.0. Relying on this function is highly discouraged.
-        // https://www.php.net/manual/en/function.strftime.php
-        // return @strftime('%Y-%m-%d %H:%M', time()); 
-
         return date("Y-m-d H:i:s", time());
     }
 }
