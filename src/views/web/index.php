@@ -19,7 +19,7 @@
                 <a href="https://www.yiiframework.com/" class="" target="_blank" rel="noopener">
                     <img src="https://yiisoft.github.io/docs/images/yii_logo.svg" height="150" alt="Yii" style="max-width: 100%;">
                 </a>
-                <h1>Yii Application Requirements Checker</h1>
+                <h1>Requirements Checker</h1>
             </div>
         </header>
         <hr>
