@@ -65,7 +65,7 @@
                 <?php foreach ($requirements as $requirement) : ?>
                     <tr class="<?= $requirement['condition'] ? 'success' : ($requirement['mandatory'] ? 'danger' : 'warning') ?>">
                         <td>
-                            <?php echo $requirement['name'] ?>
+                            <?= $requirement['name'] ?>
                         </td>
                         <td class="text-center">
                             <span class="result">
