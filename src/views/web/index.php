@@ -51,7 +51,7 @@
                 <div class="alert alert-success">
                     <strong>Congratulations! Your server configuration satisfies all requirements.</strong>
                 </div>
-            <?php endif; ?>
+            <?php endif ?>
 
             <h3>Details</h3>
 
