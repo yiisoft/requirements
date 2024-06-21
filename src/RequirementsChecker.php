@@ -315,7 +315,7 @@ final class RequirementsChecker
             /**
              * @psalm-suppress InvalidArgument Need for compatibility with PHP 7.4
              */
-            PHP_VERSION_ID >= 80000 ? ob_implicit_flush(false) : ob_implicit_flush(false);
+            PHP_VERSION_ID >= 80000 ? ob_implicit_flush(false) : ob_implicit_flush(0);
 
             /** @psalm-suppress UnresolvableInclude */
             require $_viewFile_;
