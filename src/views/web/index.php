@@ -47,7 +47,7 @@
                 <div class="alert alert-info">
                     <strong>Your server configuration satisfies the minimum requirements by this application.<br>Please pay attention to the warnings listed below and check if your application will use the corresponding features.</strong>
                 </div>
-            <?php else : ?>
+            <?php else: ?>
                 <div class="alert alert-success">
                     <strong>Congratulations! Your server configuration satisfies all requirements.</strong>
                 </div>
