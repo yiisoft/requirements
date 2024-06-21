@@ -39,7 +39,7 @@
             </p>
 
             <h3>Conclusion</h3>
-            <?php if ($summary['errors'] > 0) : ?>
+            <?php if ($summary['errors'] !== []): ?>
                 <div class="alert alert-danger">
                     <strong>Unfortunately your server configuration does not satisfy the requirements by this application.<br>Please refer to the table below for detailed explanation.</strong>
                 </div>
