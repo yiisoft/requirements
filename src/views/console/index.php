@@ -25,7 +25,7 @@ foreach ($requirements as $key => $requirement) {
         echo 'Required by: ' . strip_tags($requirement['by']) . "\n";
         $memo = strip_tags($requirement['memo']);
         if (!empty($memo)) {
-            echo 'Memo: ' . strip_tags($requirement['memo']) . "\n";
+            echo strip_tags($requirement['memo']) . "\n";
         }
     }
     echo "\n";

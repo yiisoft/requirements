@@ -7,14 +7,17 @@ namespace Yiisoft\Requirements;
 use function intval;
 
 /**
- * YiiRequirementChecker allows checking, if current system meets the requirements for running the Yii application.
+ * `RequirementsChecker` allows checking, if current system meets the requirements for running the Yii application.
  * This class allows rendering of the check report for the web and console application interface.
  *
  * Example:
  *
  * ```php
- * require_once 'path/to/YiiRequirementChecker.php';
- * $requirementsChecker = new YiiRequirementChecker();
+ * use Yiisoft\Requirements\RequirementsChecker;
+ *
+ * require_once('vendor/yiisoft/requirements/src/RequirementsChecker.php');
+ * 
+ * $requirementsChecker = new RequirementsChecker;
  * $requirements = [
  *     [
  *         'name' => 'PHP Some Extension',
@@ -402,6 +405,6 @@ final class RequirementsChecker
      */
     public function getNowDate(): string
     {
-        return @strftime('%Y-%m-%d %H:%M', time());
+        return date('Y-m-d H:i:s');
     }
 }
