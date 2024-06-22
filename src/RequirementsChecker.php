@@ -7,7 +7,7 @@ namespace Yiisoft\Requirements;
 use function intval;
 
 /**
- * RequirementsChecker allows checking, if current system meets the requirements for running the Yii application.
+ * `RequirementsChecker` allows checking, if current system meets the requirements for running the Yii application.
  * This class allows rendering of the check report for the web and console application interface.
  *
  * Example:
