@@ -16,6 +16,7 @@ use function intval;
  * use Yiisoft\Requirements\RequirementsChecker;
  *
  * require_once('vendor/yiisoft/requirements/src/RequirementsChecker.php');
+ * 
  * $requirementsChecker = new RequirementsChecker;
  * $requirements = [
  *     [

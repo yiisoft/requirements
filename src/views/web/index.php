@@ -1,9 +1,10 @@
 <?php
-/* @var $this Yiisoft\Requirements\RequirementsChecker */
-/* @var $summary array */
-/* @var $requirements array[] */
-?>
-<!DOCTYPE html>
+/**
+ * @var Yiisoft\Requirements\RequirementsChecker $this
+ * @var array $summary
+ * @var array[] $requirements
+ */
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -39,15 +40,15 @@
             </p>
 
             <h3>Conclusion</h3>
-            <?php if ($summary['errors'] !== []): ?>
+            <?php if ($summary['errors'] !== []) : ?>
                 <div class="alert alert-danger">
                     <strong>Unfortunately your server configuration does not satisfy the requirements by this application.<br>Please refer to the table below for detailed explanation.</strong>
                 </div>
-            <?php elseif ($summary['warnings'] !== []): ?>
+            <?php elseif ($summary['warnings'] !== []) : ?>
                 <div class="alert alert-info">
                     <strong>Your server configuration satisfies the minimum requirements by this application.<br>Please pay attention to the warnings listed below and check if your application will use the corresponding features.</strong>
                 </div>
-            <?php else: ?>
+            <?php else : ?>
                 <div class="alert alert-success">
                     <strong>Congratulations! Your server configuration satisfies all requirements.</strong>
                 </div>
@@ -69,15 +70,14 @@
                         </td>
                         <td class="text-center">
                             <span class="result">
-                                <!-- <span class="result">< ?php echo $requirement['condition'] ? 'Passed' : ($requirement['mandatory'] ? 'Failed' : 'Warning') ?></span> -->
-                                <?php echo $requirement['condition'] ? '<img src="yii3_sign.svg" height="20" alt="Passed">' : ($requirement['mandatory'] ? '<img src="yii3_sign_black.svg" height="20" alt="Failed">' : '<img src="yii3_sign_grey.svg" height="20" alt="Warning">') ?>
+                                <?= $requirement['condition'] ? '<img src="yii3_sign.svg" height="20" alt="Passed">' : ($requirement['mandatory'] ? '<img src="yii3_sign_red.svg" height="20" alt="Failed">' : '<img src="yii3_sign_grey.svg" height="20" alt="Warning">') ?>
                             </span>
                         </td>
                         <td>
-                            <?php echo $requirement['by'] ?>
+                            <?= $requirement['by'] ?>
                         </td>
                         <td>
-                            <?php echo $requirement['memo'] ?>
+                            <?= $requirement['memo'] ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -85,7 +85,7 @@
         </main>
         <hr>
         <footer>
-            <p>Server: <?php echo $this->getServerInfo() . ' ' . $this->getNowDate() ?></p>
+            <p>Server: <?= $this->getServerInfo() . ' ' . $this->getNowDate() ?></p>
             <p>Powered by <a href="https://www.yiiframework.com/" rel="external">Yii Framework</a></p>
         </footer>
     </div>
