@@ -13,9 +13,9 @@ use function intval;
  * Example:
  *
  * ```php
- * 
- * require_once('vendor/yiisoft/requirements/src/RequirementsChecker.php');
  * use Yiisoft\Requirements\RequirementsChecker;
+ *
+ * require_once('vendor/yiisoft/requirements/src/RequirementsChecker.php');
  * $requirementsChecker = new RequirementsChecker;
  * $requirements = [
  *     [
