@@ -8,7 +8,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Requirements Checker</title>
+    <title>Yii Requirements Checker</title>
     <?php $this->renderViewFile(__DIR__ . '/css.php'); ?>
 </head>
 
