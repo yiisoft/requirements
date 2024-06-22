@@ -404,6 +404,6 @@ final class RequirementsChecker
      */
     public function getNowDate(): string
     {
-        return date("Y-m-d H:i:s", time());
+        return date('Y-m-d H:i:s');
     }
 }
