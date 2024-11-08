@@ -294,6 +294,26 @@ final class RequirementsChecker
         return ($minCheckResult && $maxCheckResult);
     }
 
+    
+    /**
+     * Checks if the php.ini setting 'max_execution_time' exceeds a reliable and tested execution time 
+     * @param string|null $max
+     * @return bool
+     */
+    public function checkMaxExecutionTime(?string $max = null): bool
+    {
+        $maxExecutionTime = ini_get('max_exection_time');
+        if ($max !== null) {
+            if ($maxExecutionTime < $max) {
+                $checkResult = false;
+            } else {
+                $checkResult = true;
+            }
+            return $checkResult;
+        }
+        return false;
+    }
+
     /**
      * Renders a view file.
      * This method includes the view file as a PHP script
