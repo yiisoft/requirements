@@ -303,15 +303,7 @@ final class RequirementsChecker
     public function checkMaxExecutionTime(?string $max = null): bool
     {
         $maxExecutionTime = ini_get('max_exection_time');
-        if ($max !== null) {
-            if ($maxExecutionTime < $max) {
-                $checkResult = false;
-            } else {
-                $checkResult = true;
-            }
-            return $checkResult;
-        }
-        return false;
+        return $max === null || $maxExecutionTime <= $max;
     }
 
     /**
