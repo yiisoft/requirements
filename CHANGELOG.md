@@ -1,5 +1,9 @@
 # Yii Requirements Checker Change Log
 
+## 1.1.1 under development
+
+- no changes in this release.
+
 ## 1.1.0 November 19, 2024
 
 - New #80: Add `RequirementsChecker::checkMaxExecutionTime()` that check on current server's php.ini's
