@@ -4,7 +4,14 @@ declare(strict_types=1);
 
 namespace Yiisoft\Requirements;
 
+use function array_key_exists;
+use function extension_loaded;
+use function gettype;
+use function ini_get;
 use function intval;
+use function is_array;
+use function is_string;
+use function strlen;
 
 /**
  * `RequirementsChecker` allows checking, if current system meets the requirements for running the Yii application.
@@ -278,8 +285,17 @@ final class RequirementsChecker
      */
     public function checkUploadMaxFileSize(?string $min = null, ?string $max = null): bool
     {
+        /**
+         * @var string $postMaxSize "post_max_size" option is existed, so `ini_get()` always returns a string.
+         */
         $postMaxSize = ini_get('post_max_size');
+
+        /**
+         * @var string $uploadMaxFileSize "upload_max_filesize" option is existed, so `ini_get()` always returns
+         * a string.
+         */
         $uploadMaxFileSize = ini_get('upload_max_filesize');
+
         if ($min !== null) {
             $minCheckResult = $this->compareByteSize($postMaxSize, $min, '>=') && $this->compareByteSize($uploadMaxFileSize, $min, '>=');
         } else {
@@ -315,7 +331,7 @@ final class RequirementsChecker
      * @param bool $_return_ Whether the rendering result should be returned as a string.
      * @return string The rendering result. Null if the rendering result is not required.
      */
-    public function renderViewFile(string $_viewFile_, array $_data_ = null, bool $_return_ = false): ?string
+    public function renderViewFile(string $_viewFile_, ?array $_data_ = null, bool $_return_ = false): ?string
     {
         // we use special variable names here to avoid conflict when extracting data
         if (is_array($_data_)) {
@@ -333,6 +349,9 @@ final class RequirementsChecker
             /** @psalm-suppress UnresolvableInclude */
             require $_viewFile_;
 
+            /**
+             * @var string In this case active output buffer is always existed, so `ob_get_clean()` returns a string.
+             */
             return ob_get_clean();
         }
 

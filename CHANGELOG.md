@@ -2,7 +2,9 @@
 
 ## 1.1.1 under development
 
-- no changes in this release.
+- Chg #86: Change PHP constraint in `composer.json` to `7.4.* || 8.0 - 8.4` (@vjik)
+- Enh #86: Use FQN for built-in PHP functions (@vjik)
+- Bug #86: Explicitly mark nullable parameters (@vjik)
 
 ## 1.1.0 November 19, 2024
 
