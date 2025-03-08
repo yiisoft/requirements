@@ -11,7 +11,7 @@
 [![Build status](https://github.com/yiisoft/requirements/actions/workflows/build.yml/badge.svg)](https://github.com/yiisoft/requirements/actions/workflows/build.yml)
 [![Code coverage](https://codecov.io/gh/yiisoft/requirements/graph/badge.svg?token=4Y6OWVXBOP)](https://codecov.io/gh/yiisoft/requirements)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyiisoft%2Frequirements%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/yiisoft/requirements/master)
-[![static analysis](https://github.com/yiisoft/requirements/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/requirements/actions?query=workflow%3A%22static+analysis%22)
+[![Static analysis](https://github.com/yiisoft/requirements/actions/workflows/static.yml/badge.svg?branch=master)](https://github.com/yiisoft/requirements/actions/workflows/static.yml?query=branch%3Amaster)
 [![type-coverage](https://shepherd.dev/github/yiisoft/requirements/coverage.svg)](https://shepherd.dev/github/yiisoft/requirements)
 
 The package allows to check if a certain set of defined requirements is met.
