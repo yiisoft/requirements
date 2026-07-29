@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yiisoft\Requirements\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Requirements\RequirementsChecker;
+
+use function defined;
 
 class RequirementsCheckerTest extends TestCase
 {
@@ -49,25 +53,25 @@ class RequirementsCheckerTest extends TestCase
 
         $this->assertFalse(
             $checkedRequirements[$requirementsKeys['requirementPass']]['error'],
-            'Passed requirement has an error!'
+            'Passed requirement has an error!',
         );
         $this->assertFalse(
             $checkedRequirements[$requirementsKeys['requirementPass']]['warning'],
-            'Passed requirement has a warning!'
+            'Passed requirement has a warning!',
         );
 
         $this->assertTrue(
             $checkedRequirements[$requirementsKeys['requirementError']]['error'],
-            'Error requirement has no error!'
+            'Error requirement has no error!',
         );
 
         $this->assertFalse(
             $checkedRequirements[$requirementsKeys['requirementWarning']]['error'],
-            'Error requirement has an error!'
+            'Error requirement has an error!',
         );
         $this->assertTrue(
             $checkedRequirements[$requirementsKeys['requirementWarning']]['warning'],
-            'Error requirement has no warning!'
+            'Error requirement has no warning!',
         );
     }
 
@@ -103,16 +107,16 @@ class RequirementsCheckerTest extends TestCase
 
         $this->assertFalse(
             $checkedRequirements[$requirementsKeys['requirementPass']]['error'],
-            'Passed requirement has an error!'
+            'Passed requirement has an error!',
         );
         $this->assertFalse(
             $checkedRequirements[$requirementsKeys['requirementPass']]['warning'],
-            'Passed requirement has a warning!'
+            'Passed requirement has a warning!',
         );
 
         $this->assertTrue(
             $checkedRequirements[$requirementsKeys['requirementError']]['error'],
-            'Error requirement has no error!'
+            'Error requirement has no error!',
         );
     }
 
@@ -153,7 +157,7 @@ class RequirementsCheckerTest extends TestCase
             $this->assertEquals(
                 $mergedRequirement['name'],
                 $checkResult['requirements'][$key]['name'],
-                'Wrong requirements list!'
+                'Wrong requirements list!',
             );
         }
     }
@@ -168,7 +172,7 @@ class RequirementsCheckerTest extends TestCase
 
         $this->assertFalse(
             $requirementsChecker->checkPhpExtensionVersion('some_non_existing_php_extension', '0.1'),
-            'No fail while checking non existing extension!'
+            'No fail while checking non existing extension!',
         );
         $this->assertTrue($requirementsChecker->checkPhpExtensionVersion('pdo', '1.0'), 'Unable to check PDO version!');
     }
@@ -203,7 +207,7 @@ class RequirementsCheckerTest extends TestCase
         $this->assertEquals(
             $expectedByteSize,
             $requirementsChecker->getByteSize($verboseValue),
-            "Wrong byte size for \"$verboseValue\"!"
+            "Wrong byte size for \"$verboseValue\"!",
         );
     }
 
@@ -237,7 +241,7 @@ class RequirementsCheckerTest extends TestCase
         $this->assertEquals(
             $expectedComparisonResult,
             $requirementsChecker->compareByteSize($a, $b, $compare),
-            "Wrong compare \"{$a}{$compare}{$b}\""
+            "Wrong compare \"{$a}{$compare}{$b}\"",
         );
     }
 }

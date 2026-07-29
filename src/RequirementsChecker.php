@@ -13,6 +13,10 @@ use function is_array;
 use function is_string;
 use function strlen;
 
+use const DIRECTORY_SEPARATOR;
+use const EXTR_PREFIX_SAME;
+use const PHP_VERSION_ID;
+
 /**
  * `RequirementsChecker` allows checking, if current system meets the requirements for running the Yii application.
  * This class allows rendering of the check report for the web and console application interface.
@@ -101,7 +105,7 @@ final class RequirementsChecker
         foreach ($requirements as $key => $rawRequirement) {
             if (!is_array($rawRequirement)) {
                 $this->usageError(
-                    'Requirement must be an array, "' . gettype($rawRequirement) . '" has been given!'
+                    'Requirement must be an array, "' . gettype($rawRequirement) . '" has been given!',
                 );
             }
             $requirement = $this->normalizeRequirement($rawRequirement, $key);
@@ -309,7 +313,6 @@ final class RequirementsChecker
 
         return ($minCheckResult && $maxCheckResult);
     }
-
 
     /**
      * Checks if the `php.ini` setting `max_execution_time` exceeds the execution time specified.
