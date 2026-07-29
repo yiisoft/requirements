@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+use Yiisoft\Requirements\RequirementsChecker;
+
 /**
- * @var Yiisoft\Requirements\RequirementsChecker $this
+ * @var RequirementsChecker $this
  * @var array $summary
  * @var array[] $requirements
  */
@@ -15,7 +19,7 @@ echo "if appropriate PHP extensions have been loaded, and if php.ini file settin
 
 $header = 'Check conclusion:';
 echo "\n$header\n";
-echo str_pad('', strlen($header), '-') . "\n\n";
+echo str_pad('', \strlen($header), '-') . "\n\n";
 
 foreach ($requirements as $key => $requirement) {
     if ($requirement['condition']) {
@@ -32,7 +36,7 @@ foreach ($requirements as $key => $requirement) {
 }
 
 $summaryString = 'Errors: ' . $summary['errors'] . '   Warnings: ' . $summary['warnings'] . '   Total checks: ' . $summary['total'];
-echo str_pad('', strlen($summaryString), '-') . "\n";
+echo str_pad('', \strlen($summaryString), '-') . "\n";
 echo $summaryString;
 
 echo "\n\n";

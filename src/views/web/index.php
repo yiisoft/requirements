@@ -1,6 +1,9 @@
 <?php
+
+use Yiisoft\Requirements\RequirementsChecker;
+
 /**
- * @var Yiisoft\Requirements\RequirementsChecker $this
+ * @var RequirementsChecker $this
  * @var array $summary
  * @var array[] $requirements
  */
