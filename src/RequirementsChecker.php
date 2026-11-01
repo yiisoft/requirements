@@ -188,7 +188,11 @@ final class RequirementsChecker
             return false;
         }
         $extensionVersion = phpversion($extensionName);
-        if ($extensionVersion === false) {
+        /**
+         * @psalm-suppress RiskyTruthyFalsyComparison `empty()` is used intentionally to reject `false`, an empty string
+         * and "0" as unusable version information.
+         */
+        if (empty($extensionVersion)) {
             return false;
         }
         if (strncasecmp($extensionVersion, 'PECL-', 5) === 0) {
