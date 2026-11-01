@@ -188,10 +188,18 @@ final class RequirementsChecker
             return false;
         }
         $extensionVersion = phpversion($extensionName);
+        /**
+         * @psalm-suppress RiskyTruthyFalsyComparison `empty()` is used intentionally to reject `false`, an empty string
+         * and "0" as unusable version information.
+         */
         if (empty($extensionVersion)) {
             return false;
         }
         if (strncasecmp($extensionVersion, 'PECL-', 5) === 0) {
+            /**
+             * @var string $extensionVersion The string starts with "PECL-", so its length is at least 5 characters
+             * and `substr()` always returns a string.
+             */
             $extensionVersion = substr($extensionVersion, 5);
         }
 
@@ -207,6 +215,10 @@ final class RequirementsChecker
     public function checkPhpIniOn(string $name): bool
     {
         $value = ini_get($name);
+        /**
+         * @psalm-suppress RiskyTruthyFalsyComparison `empty()` is used intentionally to treat `false`, an empty string
+         * and "0" as a disabled option.
+         */
         if (empty($value)) {
             return false;
         }
@@ -222,11 +234,15 @@ final class RequirementsChecker
     public function checkPhpIniOff(string $name): bool
     {
         $value = ini_get($name);
+        /**
+         * @psalm-suppress RiskyTruthyFalsyComparison `empty()` is used intentionally to treat `false`, an empty string
+         * and "0" as a disabled option.
+         */
         if (empty($value)) {
             return true;
         }
 
-        return (strtolower($value) === 'off');
+        return strtolower($value) === 'off';
     }
 
     /**
@@ -340,6 +356,10 @@ final class RequirementsChecker
         } else {
             $data = $_data_;
         }
+        /**
+         * @var bool $_return_ `extract()` with `EXTR_PREFIX_SAME` doesn't overwrite existing variables,
+         * so `$_return_` is always a boolean.
+         */
         if ($_return_) {
             ob_start();
             /**
@@ -375,6 +395,10 @@ final class RequirementsChecker
         } else {
             $evalPrefix = 'eval:';
             if (is_string($requirement['condition']) && strpos($requirement['condition'], $evalPrefix) === 0) {
+                /**
+                 * @var string $expression The condition starts with the eval prefix, so its length is at least
+                 * the prefix length and `substr()` always returns a string.
+                 */
                 $expression = substr($requirement['condition'], strlen($evalPrefix));
                 $requirement['condition'] = $this->evaluateExpression($expression);
             }
